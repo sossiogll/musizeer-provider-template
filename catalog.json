@@ -4,14 +4,14 @@
   "providers": [
     {
       "name": "example",
-      "image": "ghcr.io/sossiogll/musizerr-provider-example",
-      "digest": "sha256:a3ccda76ad69c4161708baa789faa295018e2c8b4b3c9bdfdbd0871eeea0ab4a",
-      "provider_api_version": 5,
+      "image": "ghcr.io/sossiogll/musizeer-provider-example",
+      "digest": "sha256:db1b79ce5118984896613b49d5d41705f221aabb904a6792d70772a223dd05e0",
+      "provider_api_version": 6,
       "roles": [
         "metadata"
       ],
       "label": "Example",
-      "description": "An example Musizerr provider: track search through the iTunes Search API.",
+      "description": "An example Musizeer provider: track search through the iTunes Search API.",
       "homepage": "https://performance-partners.apple.com/search-api",
       "permissions": {
         "egress": [
