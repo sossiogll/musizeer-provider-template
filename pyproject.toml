@@ -3,20 +3,20 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "musizerr-provider-example"
-version = "0.1.0"
-description = "An example Musizerr provider: track search through the iTunes Search API."
+name = "musizeer-provider-example"
+version = "1.0.0"
+description = "An example Musizeer provider: track search through the iTunes Search API."
 readme = "README.md"
 requires-python = ">=3.12"
 license = {text = "MIT-0"}
 # The SDK comes with the base image (FROM in the Dockerfile): pip finds it installed and fetches nothing.
-dependencies = ["musizerr-sdk>=5.4,<6"]
+dependencies = ["musizeer-sdk>=6.0,<7"]
 
 [project.optional-dependencies]
 test = ["pytest>=8"]
 
 [tool.setuptools.packages.find]
-include = ["musizerr_provider_example*"]
+include = ["musizeer_provider_example*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -1,13 +1,13 @@
 """
-Write or update the entry of this provider in catalog.json (a Musizerr catalog, version 2).
+Write or update the entry of this provider in catalog.json (a Musizeer catalog, version 2).
 
 Standard library only: scripts/publish.sh runs it with the Python of the base image. The entry is made of what
 the build produced: the image name, the digest of the multi-architecture index GHCR returned, and the image's
-labels (the org.musizerr.provider.* ones, which the gateway checks against the entry, plus the standard
+labels (the org.musizeer.provider.* ones, which the gateway checks against the entry, plus the standard
 org.opencontainers.image.description and .url). An entry of the same name is replaced where it stands; others
 are kept.
 
-    python catalog_entry.py --catalog catalog.json --image ghcr.io/owner/musizerr-provider-x \\
+    python catalog_entry.py --catalog catalog.json --image ghcr.io/owner/musizeer-provider-x \\
         --digest sha256:... --labels labels.txt [--catalog-name "My providers"]
 """
 from __future__ import annotations
@@ -20,7 +20,7 @@ import tempfile
 from pathlib import Path
 
 CATALOG_VERSION = 2
-PREFIX = "org.musizerr.provider."
+PREFIX = "org.musizeer.provider."
 
 
 def read_labels(text: str) -> dict[str, str]:
@@ -86,7 +86,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--image", required=True, help="registry/repository, no tag")
     parser.add_argument("--digest", required=True)
     parser.add_argument("--labels", required=True, type=Path, help="key=value lines: the image's labels")
-    parser.add_argument("--catalog-name", default="Musizerr providers", help="the catalog's name, when this creates it")
+    parser.add_argument("--catalog-name", default="Musizeer providers", help="the catalog's name, when this creates it")
     args = parser.parse_args(argv)
     entry = entry_from_labels(read_labels(args.labels.read_text(encoding="utf-8")), args.image, args.digest)
     existing = json.loads(args.catalog.read_text(encoding="utf-8")) if args.catalog.exists() else None

@@ -8,16 +8,16 @@
 #
 #   IMAGE_NAMESPACE  where the image goes (default: ghcr.io/<owner of the origin remote>, lower case)
 #   CATALOG_NAME     the catalog's name, when catalog.json does not exist yet (default: "<repository> providers")
-#   BUILDER          the buildx builder (default musizerr-publish, docker-container driver, created when missing:
+#   BUILDER          the buildx builder (default musizeer-publish, docker-container driver, created when missing:
 #                    the default driver cannot push an image for several platforms)
 #
-# Steps: (1) build the image for this machine and ask the provider for its org.musizerr.provider.* labels (the
+# Steps: (1) build the image for this machine and ask the provider for its org.musizeer.provider.* labels (the
 # provider describes itself: name, roles, contract version, permissions), (2) build it with them for both
-# platforms and push <namespace>/musizerr-provider-<name>:<version of pyproject.toml>, (3) write the entry in
+# platforms and push <namespace>/musizeer-provider-<name>:<version of pyproject.toml>, (3) write the entry in
 # catalog.json, pinned by the digest of the multi-architecture index. A version that is already published is never
 # pushed again: the script says so and changes nothing (raise the version in pyproject.toml). A registry that answers
 # "not found", or refuses access (a package that does not exist yet), means not published: the push would be refused
-# too, so nothing is overwritten; any other failure (the network) is an error. catalog.json is what a Musizerr source
+# too, so nothing is overwritten; any other failure (the network) is an error. catalog.json is what a Musizeer source
 # points at: the workflow .github/workflows/publish.yml runs this script on every push to dev and commits it there;
 # from your machine, commit it yourself. Needs Docker and `docker login ghcr.io` (a token that may write packages).
 set -eu
@@ -36,23 +36,23 @@ if [ -z "${IMAGE_NAMESPACE:-}" ]; then
   IMAGE_NAMESPACE=ghcr.io/$OWNER
 fi
 CATALOG_NAME=${CATALOG_NAME:-"$(basename "$ROOT") providers"}
-BUILDER=${BUILDER:-musizerr-publish}
+BUILDER=${BUILDER:-musizeer-publish}
 PLATFORMS=linux/amd64,linux/arm64
 VERSION=$(sed -n 's/^version = "\(.*\)"$/\1/p' pyproject.toml | head -1)
 BASE=$(sed -n 's/^FROM \([^ ]*\).*/\1/p' Dockerfile | head -1)
 [ -n "$VERSION" ] && [ -n "$BASE" ] || { echo "cannot read the version (pyproject.toml) or the base image (Dockerfile)" >&2; exit 1; }
 
 TMP=$(mktemp -d)
-LOCAL=musizerr-provider-publish-$(basename "$ROOT"):build
+LOCAL=musizeer-provider-publish-$(basename "$ROOT"):build
 trap 'rm -rf "$TMP"; docker image rm -f "$LOCAL" >/dev/null 2>&1 || true' EXIT
 
 echo "== labels" >&2
 docker pull -q "$BASE" >/dev/null
 docker build -q --provenance=false -t "$LOCAL" . >/dev/null
 docker run --rm "$LOCAL" --print-labels >"$TMP/labels"
-NAME=$(sed -n 's/^org.musizerr.provider.name=//p' "$TMP/labels")
+NAME=$(sed -n 's/^org.musizeer.provider.name=//p' "$TMP/labels")
 [ -n "$NAME" ] || { echo "the provider printed no name label" >&2; exit 1; }
-IMAGE=$IMAGE_NAMESPACE/musizerr-provider-$NAME
+IMAGE=$IMAGE_NAMESPACE/musizeer-provider-$NAME
 sed 's/^/   /' "$TMP/labels" >&2
 
 if docker buildx imagetools inspect "$IMAGE:$VERSION" >/dev/null 2>"$TMP/error"; then

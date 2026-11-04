@@ -1,5 +1,5 @@
 """
-The tests of the example provider. They need no network and no Musizerr: the provider is built
+The tests of the example provider. They need no network and no Musizeer: the provider is built
 with a StaticProviderContext (its settings and timeouts, as the host would give them) and its
 HTTP is replaced by recorded answers.
 """
@@ -12,14 +12,14 @@ import urllib.parse
 
 import pytest
 
-from musizerr_sdk.auth import AuthSession
-from musizerr_sdk.conformance import check_provider
-from musizerr_sdk.context import StaticProviderContext
-from musizerr_sdk.failures import classify_exception
-from musizerr_sdk.manifest import build
+from musizeer_sdk.auth import AuthSession
+from musizeer_sdk.conformance import check_provider
+from musizeer_sdk.context import StaticProviderContext
+from musizeer_sdk.failures import classify_exception
+from musizeer_sdk.manifest import build
 
-import musizerr_provider_example as example
-from musizerr_provider_example import ExampleMetadataProvider
+import musizeer_provider_example as example
+from musizeer_provider_example import ExampleMetadataProvider
 
 SONG = {
     "wrapperType": "track", "trackId": 1440857781, "artistId": 3296287, "collectionId": 1440857775,
