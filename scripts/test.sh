@@ -1,6 +1,6 @@
 #!/bin/sh
 # Run the tests in a throwaway container of the base image, which already holds Python and the SDK: nothing runs
-# on your machine but Docker, and you need no checkout of Musizerr.
+# on your machine but Docker, and you need no checkout of Musizeer.
 #
 #   scripts/test.sh [pytest arguments]
 #

@@ -1,10 +1,10 @@
 name: publish
 
 # Every push to dev publishes the provider when its version has no image yet: it runs the tests, pushes
-# ghcr.io/<owner>/musizerr-provider-<name>:<version> for linux/amd64 and linux/arm64 (scripts/publish.sh), pins it
+# ghcr.io/<owner>/musizeer-provider-<name>:<version> for linux/amd64 and linux/arm64 (scripts/publish.sh), pins it
 # in catalog.json and commits catalog.json to dev. A push that does not raise the version (catalog.json alone, a
 # script, the README) publishes nothing. master is never written here: catalog.json reaches it with the next pull
-# request from dev, and master's catalog.json is the one Musizerr instances read.
+# request from dev, and master's catalog.json is the one Musizeer instances read.
 on:
   push:
     branches: [dev]

@@ -1,10 +1,10 @@
-"""An example Musizerr provider: track search and lookup through the iTunes Search API.
+"""An example Musizeer provider: track search and lookup through the iTunes Search API.
 
 It is the starting point of a provider of your own (see README.md): a metadata provider
 that needs no account and no dependency but the SDK, the standard library doing the HTTP.
 Replace the service, keep the shape:
 
-- it imports ``musizerr_sdk`` and nothing else of Musizerr;
+- it imports ``musizeer_sdk`` and nothing else of Musizeer;
 - it declares what it is (``name``, ``label``, ``auth``, ``permissions``) as data;
 - it talks only to the destinations its ``permissions`` declare (the sandbox grants
   nothing else, and reaches them through a proxy the standard library and httpx pick
@@ -19,12 +19,12 @@ import json
 import urllib.parse
 import urllib.request
 
-from musizerr_sdk.auth import AccountModel, AuthDefinition, AuthFlow, AuthSession
-from musizerr_sdk.interfaces import PROVIDER_API_VERSION, MetadataProvider
-from musizerr_sdk.models import Track
-from musizerr_sdk.permissions import Permissions
-from musizerr_sdk.settings import ProviderSetting
-from musizerr_sdk.text import parse_year
+from musizeer_sdk.auth import AccountModel, AuthDefinition, AuthFlow, AuthSession
+from musizeer_sdk.interfaces import PROVIDER_API_VERSION, MetadataProvider
+from musizeer_sdk.models import Track
+from musizeer_sdk.permissions import Permissions
+from musizeer_sdk.settings import ProviderSetting
+from musizeer_sdk.text import parse_year
 
 API = "https://itunes.apple.com"
 
@@ -39,7 +39,7 @@ class ExampleMetadataProvider(MetadataProvider):
     auth = AuthDefinition(flow=AuthFlow.NONE, account_model=AccountModel.NONE)
 
     def config_schema(self) -> list[ProviderSetting]:
-        # What the admin can set, placed under the provider in Musizerr's settings.
+        # What the admin can set, placed under the provider in Musizeer's settings.
         return [
             ProviderSetting(
                 key="country", type="string", default="US", label="Store country",
